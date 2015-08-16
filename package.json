@@ -1,0 +1,42 @@
+{
+  "name": "ipc-light",
+  "version": "0.1.0",
+  "description": "A lightweight IPC server library",
+  "main": "index.js",
+  "scripts": {
+    "start": "mocha ./tests/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fed135/ipc-light.git"
+  },
+  "keywords": [
+    "ipc",
+    "socket",
+    "unix",
+    "process",
+    "network",
+    "micro-service",
+    "communication",
+    "light"
+  ],
+  "author": "frederic charette",
+  "licenses": [
+    {
+      "type": "GNU GPL V2",
+      "url": "https://github.com/fed135/ipc-light/blob/master/LICENSE"
+    }
+  ],
+  "bugs": {
+    "url": "https://github.com/fed135/ipc-light/issues"
+  },
+  "homepage": "https://github.com/fed135/ipc-light#readme",
+  "devDependencies": {
+    "chai": "2.3.0",
+    "mocha": "2.2.4"
+  },
+  "dependencies": {
+    "debug": "2.2.0",
+    "signals": "1.0.0"
+  }
+}
