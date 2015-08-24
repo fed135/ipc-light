@@ -9,7 +9,7 @@ var defaults = require('./defaults');
 
 var fs = require('fs');
 var net = require('net');
-var Signal = require('signal');
+var Signal = require('signals');
 var debug = require('debug')('ipc');
 
 /* Methods -------------------------------------------------------------------*/
@@ -55,11 +55,13 @@ Server.prototype.listen = function(path) {
 	debug('log: unlinking server path...');
 	fs.unlink(this.path, function() {
 
-		net.createServer(_self._handleConnections.bind(_self));
+		_self.server = net.createServer(_self._handleConnections.bind(_self));
 
 		debug('log: starting server...');
 		_self.server.listen(_self.path);
 	});
+
+	return this;
 };
 
 /**
@@ -72,6 +74,8 @@ Server.prototype.broadcast = function(payload) {
 	this.sockets.forEach(function(e) {
 		if (e.emit) e.emit(defaults.evt, payload);
 	});
+
+	return this;
 };
 
 /**
@@ -82,9 +86,11 @@ Server.prototype.broadcast = function(payload) {
  */
 Server.prototype.close = function(callback) {
 	debug('warning: closing current server');
-
+	this.server.close();
 	this.server = null;
 	if (callback) callback();
+
+	return this;
 };
 
 /**
@@ -128,7 +134,6 @@ Server.prototype._handleConnections = function(socket) {
 	var _self = this;
 
 	debug('log: connection received');
-	console.log(socket);
 
 	this.sockets.push(socket);
 
@@ -142,7 +147,8 @@ Server.prototype._handleConnections = function(socket) {
 
 	socket.on(defaults.evt, function(payload) {
 		_self.handler(payload, function(msg) {
-			socket.emit(defaults.evt, msg);
+			//something might be broken here... :()
+			//socket.emit(defaults.evt, msg);
 		});
 	});
 

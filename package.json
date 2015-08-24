@@ -4,7 +4,7 @@
   "description": "A lightweight IPC server library",
   "main": "index.js",
   "scripts": {
-    "start": "mocha ./tests/index.js"
+    "test": "mocha ./tests/index.js"
   },
   "repository": {
     "type": "git",

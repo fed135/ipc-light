@@ -8,7 +8,7 @@
 var defaults = require('./defaults');
 
 var net = require('net');
-var Signal = require('signal');
+var Signal = require('signals');
 var debug = require('debug')('ipc');
 
 /* Methods -------------------------------------------------------------------*/
@@ -27,6 +27,12 @@ function Client(config) {
 	this.ondata = new Signal();
 }
 
+/**
+ * Emits a socket to an ipc server
+ * @method emit
+ * @memberof Client
+ * params {?} payload The payload to send to the server
+ */
 Client.prototype.emit = function(payload) {
 	if (!this.socket) {
 		debug('error: client is not connected');
@@ -34,14 +40,17 @@ Client.prototype.emit = function(payload) {
 	}
 
 	this.socket.emit(defaults.evt, payload);
+
+	return this;
 };
 
 /**
  * Connects the client to an IPC server
  * @method connect
  * @memberof Client
+ * @params {function} callback The callback method
  */
-Client.prototype.connect = function() {
+Client.prototype.connect = function(callback) {
 	debug('log: trying to connect to ' + this.path);
 
 	this.socket = net.connect({
