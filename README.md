@@ -16,6 +16,22 @@ Unfortunatly, it is only available on Mac and Linux.
     $ npm install ipc-light --save
 
 
+---
+## Tests
+
+    $ npm test
+
+
+---
+## Debugging
+
+ipc-light uses the debug module, to include ipc-light logs in your app
+use the debug syntax. Ex:
+
+    $ DEBUG=ipc npm start
+    
+    
 ----
 ## Usage
 
+See examples in the docs folder. [Here](https://github.com/fed135/ipc-light/edit/master/docs/EXAMPLES.md)
