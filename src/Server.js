@@ -72,7 +72,7 @@ Server.prototype.listen = function(path) {
  */
 Server.prototype.broadcast = function(payload) {
 	this.sockets.forEach(function(e) {
-		if (e.emit) e.emit(defaults.evt, payload);
+		if (e.write) e.write(JSON.stringify(payload) + '\n');
 	});
 
 	return this;
@@ -146,9 +146,8 @@ Server.prototype._handleConnections = function(socket) {
 	});
 
 	socket.on(defaults.evt, function(payload) {
-		_self.handler(payload, function(msg) {
-			//something might be broken here... :()
-			//socket.emit(defaults.evt, msg);
+		_self.handler(JSON.parse(payload.toString()), function(msg) {
+			socket.write(JSON.stringify(msg) + '\n');
 		});
 	});
 

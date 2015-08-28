@@ -39,7 +39,7 @@ Client.prototype.emit = function(payload) {
 		return false;
 	}
 
-	this.socket.emit(defaults.evt, payload);
+	this.socket.write(JSON.stringify(payload) + '\n');
 
 	return this;
 };
@@ -61,10 +61,21 @@ Client.prototype.connect = function(callback) {
 
 	this.socket.on('error', this._handleError.bind(this));
 
-	this.socket.on(defaults.evt, this.ondata.dispatch);
+	this.socket.on(defaults.evt, this._handleData.bind(this));
 
 	debug('log: client connected');
 	this.onconnect.dispatch(this);
+};
+
+/**
+ * Parses received buffer to transform it back into an object
+ * @private
+ * @method _handleData
+ * @memberof Client
+ * @params {Buffer} data The received data
+ */
+Client.prototype._handleData = function(data) {
+	this.ondata.dispatch(JSON.parse(data.toString()));
 };
 
 /**

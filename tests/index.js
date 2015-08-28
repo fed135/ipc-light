@@ -8,60 +8,68 @@ var client_a;
 var client_b;
 
 //Server
-describe('Starting ipc server:', function() {
+describe('Starting:', function() {
 	
 	//Creation - no args
-	it('#createServer()', function() {
+	it('a) #createServer()', function() {
 		server_a = ipc.createServer(function(request, reply) {
-			console.log('a) handler');
-			console.log(request);
+			//console.log('a) handler');
+			//console.log(request);
     	reply('server_a');
     }).listen();
 	});
 
 	//Creation - with args
-	it('#createServer(args)', function() {
+	it('b) #createServer(args)', function() {
 		server_b = ipc.createServer(function(request, reply) {
-			console.log('b) handler');
-			console.log(request);
+			//console.log('b) handler');
+			//console.log(request);
     	reply('server_b');
     }).listen('/var/tmp/test_test.socket');
 	});
 });
 
 //Client
-describe('Connecting ipc server:', function() {
+describe('Connecting:', function() {
 	
 	//Creation - no args
-	it('#connect()', function() {
-		client_a = ipc.connect({}, function() {});
+	it('a) #connect()', function() {
+		client_a = ipc.connect({}, function() {
+			//console.log('a) connect callback:');
+			//console.log(arguments);
+		});
 	});
 
 	//Creation - with args
-	it('#connect(args)', function() {
+	it('b) #connect(args)', function() {
 		client_b = ipc.connect({ 
 			path: '/var/tmp/test_test.socket'
-		}, function() {});
+		}, function() {
+			//console.log('b) connect callback:');
+			//console.log(arguments);
+		});
 	});
 });
 
-describe('Client flow', function() {
+describe('Client:', function() {
 	it('a) #emit()', function() {
 		client_a.ondata.add(function(data) {
-			console.log(data);
+			//console.log('a) emit response:');
+			//console.log(data);
 		});
 		client_a.emit('some payload');
 	});
 
 	it('b) #emit()', function() {
 		client_b.ondata.add(function(data) {
-			console.log(data);
+			//console.log('b) emit response:');
+			//console.log(data);
 		});
 		client_b.emit({foo:'bar'});
 	});
 });
 
-describe('Server flow', function() {
+describe('Server:', function() {
 	it('a) #broadcast()', function() {
 		server_a.broadcast('some broadcast');
 	});
@@ -71,7 +79,7 @@ describe('Server flow', function() {
 	});	
 });
 
-describe('teardown', function() {
+describe('Teardown:', function() {
 	it('a) #disconnect()', function() {
 		client_a.disconnect();
 	});
