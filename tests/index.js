@@ -34,19 +34,13 @@ describe('Connecting:', function() {
 	
 	//Creation - no args
 	it('a) #connect()', function() {
-		client_a = ipc.connect({}, function() {
-			//console.log('a) connect callback:');
-			//console.log(arguments);
-		});
+		client_a = ipc.connect();
 	});
 
 	//Creation - with args
 	it('b) #connect(args)', function() {
 		client_b = ipc.connect({ 
 			path: '/var/tmp/test_test.socket'
-		}, function() {
-			//console.log('b) connect callback:');
-			//console.log(arguments);
 		});
 	});
 });

@@ -19,6 +19,7 @@ var debug = require('debug')('ipc');
  * @params {Object} config The configuration object for the client
  */
 function Client(config) {
+	config = config || {};
 	this.path = config.path || defaults.path;
 	this.socket;
 
@@ -64,6 +65,7 @@ Client.prototype.connect = function(callback) {
 	this.socket.on(defaults.evt, this._handleData.bind(this));
 
 	debug('log: client connected');
+	if (callback) callback(this);
 	this.onconnect.dispatch(this);
 };
 

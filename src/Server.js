@@ -42,8 +42,8 @@ Server.prototype.listen = function(path) {
 	if (this.server) {
 		debug('warning: server already listening on path: ' + this.path);
 
-		return this.close(function() {
-			_self.listen(path);
+		return this.close.call(this, function() {
+			_self.listen.call(_self, path);
 		});
 	}
 
