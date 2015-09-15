@@ -36,14 +36,14 @@ function Server() {
  * @memberof Server
  * @params {string} path The system path to connect to
  */
-Server.prototype.listen = function(path) {
+Server.prototype.listen = function(path, callback) {
 	var _self = this;
 
 	if (this.server) {
 		debug('warning: server already listening on path: ' + this.path);
 
 		return this.close.call(this, function() {
-			_self.listen.call(_self, path);
+			_self.listen.call(_self, path, callback);
 		});
 	}
 
@@ -57,8 +57,8 @@ Server.prototype.listen = function(path) {
 
 		_self.server = net.createServer(_self._handleConnections.bind(_self));
 
-		debug('log: starting server...');
-		_self.server.listen(_self.path);
+		debug('log: starting server ' + _self.path);
+		_self.server.listen(_self.path, callback);
 	});
 
 	return this;
@@ -146,6 +146,7 @@ Server.prototype._handleConnections = function(socket) {
 	});
 
 	socket.on(defaults.evt, function(payload) {
+		debug('received data');
 		_self.handler(JSON.parse(payload.toString()), function(msg) {
 			socket.write(JSON.stringify(msg) + '\n');
 		});
