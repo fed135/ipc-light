@@ -1,6 +1,6 @@
 {
   "name": "ipc-light",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "A lightweight IPC server library",
   "main": "index.js",
   "scripts": {
