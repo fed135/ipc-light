@@ -88,8 +88,10 @@ Server.prototype.close = function(callback) {
 	debug('warning: closing current server');
 	this.server.close();
 	this.server = null;
-	if (callback) callback();
-
+	fs.unlink(this.path, function() {
+		//Regardless of the outcome
+		if (callback) callback();
+	});
 	return this;
 };
 
