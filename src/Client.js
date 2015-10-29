@@ -28,6 +28,7 @@ function Client(config) {
 	this.onconnect = new Signal();
 	this.ondisconnect = new Signal();
 	this.ondata = new Signal();
+	this.onerror = new Signal();
 }
 
 /**
@@ -125,6 +126,10 @@ Client.prototype._handleDisconnect = function() {
  */
 Client.prototype._handleError = function(error) {
 	debug('error: socket error [' + error + ']');
+
+	this.socket.destroy();
+	this.socket = null;
+	this.onerror.dispatch(this);
 };
 
 /* Exports -------------------------------------------------------------------*/

@@ -30,6 +30,7 @@ function Server() {
 	//Events
 	this.onconnect = new Signal();
 	this.ondisconnect = new Signal();
+	this.onerror = new Signal();
 }
 
 /**
@@ -128,6 +129,11 @@ Server.prototype._handleDisconnect = function(socket) {
  */
 Server.prototype._handleError = function(socket, error) {
 	debug('error: socket error [' + error + ']');
+
+	this.onerror.dispatch({
+		error: error
+		socket: socket
+	});
 };
 
 /**
