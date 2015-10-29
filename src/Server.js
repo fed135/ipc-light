@@ -3,6 +3,8 @@
  * @class Server
  */
 
+'use strict'
+
 /* Requires ------------------------------------------------------------------*/
 
 var defaults = require('./defaults');
@@ -17,7 +19,7 @@ var debug = require('debug')('ipc');
 /**
  * Server class constructor
  * @constructor
- * @params {Object} config The configuration object for the server
+ * @param {object} config The configuration object for the server
  */
 function Server() {
 	this.path = null;
@@ -34,7 +36,8 @@ function Server() {
  * Tells the server to start listening.
  * @method listen
  * @memberof Server
- * @params {string} path The system path to connect to
+ * @param {string} path The system path to connect to
+ * @returns {Server} Self reference, for chaining
  */
 Server.prototype.listen = function(path, callback) {
 	var _self = this;
@@ -68,7 +71,8 @@ Server.prototype.listen = function(path, callback) {
  * Makes the server broadcast a message to all connected sockets
  * @method broadcast
  * @memberof Server
- * @params {?} payload The payload to send to all connected sockets
+ * @param {?} payload The payload to send to all connected sockets
+ * @returns {Server} Self reference, for chaining
  */
 Server.prototype.broadcast = function(payload) {
 	this.sockets.forEach(function(e) {
@@ -82,7 +86,8 @@ Server.prototype.broadcast = function(payload) {
  * Shuts down the server explicitly
  * @method close
  * @memberof Server
- * @params {function} callback The callback method
+ * @param {function} callback The callback method
+ * @returns {Server} Self reference, for chaining
  */
 Server.prototype.close = function(callback) {
 	debug('warning: closing current server');
@@ -100,7 +105,7 @@ Server.prototype.close = function(callback) {
  * @private
  * @method _handleDisconnect
  * @memberof Server
- * @params {Object} socket The socket that just disconnected
+ * @param {object} socket The socket that just disconnected
  */ 
 Server.prototype._handleDisconnect = function(socket) {
 	debug('log: socket disconnected');
@@ -118,8 +123,8 @@ Server.prototype._handleDisconnect = function(socket) {
  * @private
  * @method _handleError
  * @memberof Server
- * @params {Object} socket The socket that just had an error
- * @params {Error} error The error object
+ * @param {object} socket The socket that just had an error
+ * @param {Error} error The error object
  */
 Server.prototype._handleError = function(socket, error) {
 	debug('error: socket error [' + error + ']');
@@ -130,7 +135,7 @@ Server.prototype._handleError = function(socket, error) {
  * @private
  * @method _handleConnections
  * @memberof Server
- * @params {Object} socket The socket that just connected
+ * @param {object} socket The socket that just connected
  */
 Server.prototype._handleConnections = function(socket) {
 	var _self = this;

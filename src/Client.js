@@ -3,6 +3,8 @@
  * @class Client
  */
 
+ 'use strict'
+
 /* Requires ------------------------------------------------------------------*/
 
 var defaults = require('./defaults');
@@ -16,7 +18,7 @@ var debug = require('debug')('ipc');
 /**
  * Client class constructor
  * @constructor
- * @params {Object} config The configuration object for the client
+ * @param {object} config The configuration object for the client
  */
 function Client(config) {
 	config = config || {};
@@ -32,15 +34,16 @@ function Client(config) {
  * Emits a socket to an ipc server
  * @method emit
  * @memberof Client
- * params {?} payload The payload to send to the server
+ * param {?} payload The payload to send to the server
+ * returns {Client} Self reference, for chaining
  */
 Client.prototype.emit = function(payload) {
 	if (!this.socket) {
 		debug('error: client is not connected');
-		return false;
+		return this;
 	}
 
-	debug('writing to socket ' + this.path)
+	debug('log: writing to socket ' + this.path)
 	this.socket.write(JSON.stringify(payload) + '\n');
 
 	return this;
@@ -50,7 +53,8 @@ Client.prototype.emit = function(payload) {
  * Connects the client to an IPC server
  * @method connect
  * @memberof Client
- * @params {function} callback The callback method
+ * @param {function} callback The callback method
+ * @returns {Client} Self reference, for chaining
  */
 Client.prototype.connect = function(callback) {
 	debug('log: trying to connect to ' + this.path);
@@ -66,8 +70,10 @@ Client.prototype.connect = function(callback) {
 	this.socket.on(defaults.evt, this._handleData.bind(this));
 
 	debug('log: client connected');
-	if (callback) callback(this);
 	this.onconnect.dispatch(this);
+	if (callback) callback(this);
+
+	return this;
 };
 
 /**
@@ -75,10 +81,10 @@ Client.prototype.connect = function(callback) {
  * @private
  * @method _handleData
  * @memberof Client
- * @params {Buffer} data The received data
+ * @param {Buffer} data The received data
  */
 Client.prototype._handleData = function(data) {
-	debug('client socket got data');
+	debug('log: client socket got data');
 	this.ondata.dispatch(JSON.parse(data.toString()));
 };
 
@@ -86,11 +92,13 @@ Client.prototype._handleData = function(data) {
  * Disconnects the client to an IPC server
  * @method disconnect
  * @memberof Client
+ * @returns {Client} Self reference, for chaining
  */
 Client.prototype.disconnect = function() {
 	debug('warning: disconnecting client');
 
 	this.socket.destroy();
+	this.socket = null;
 	this.ondisconnect.dispatch(this);
 };
 
@@ -104,6 +112,7 @@ Client.prototype._handleDisconnect = function() {
 	debug('warning: client has been disconnected');
 
 	this.socket.destroy();
+	this.socket = null;
 	this.ondisconnect.dispatch(this);
 };
 
@@ -112,7 +121,7 @@ Client.prototype._handleDisconnect = function() {
  * @private
  * @method _handleError
  * @memberof Client
- * @params {Error} error The error object
+ * @param {Error} error The error object
  */
 Client.prototype._handleError = function(error) {
 	debug('error: socket error [' + error + ']');
