@@ -9,7 +9,9 @@ going through the network card, like most socket types.
 Unfortunatly, it is only available on Mac and Linux.
 
 The goal behind this implementation design is to further mimick the
-node classic setup pattern. It's designed to be simple. Very, very simple.
+node classic server setup pattern. It's designed to be simple. Very, very simple.
+
+COMPATIBLE WITH ALL VERSIONS OF NODE.
 
 
 ## Installation
