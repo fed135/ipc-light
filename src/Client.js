@@ -112,7 +112,10 @@ Client.prototype.disconnect = function() {
 Client.prototype._handleDisconnect = function() {
 	debug('warning: client has been disconnected');
 
-	this.socket.destroy();
+	if (this.socket && this.socket.destroy) {
+		this.socket.destroy();
+	}
+	
 	this.socket = null;
 	this.ondisconnect.dispatch(this);
 };
