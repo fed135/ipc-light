@@ -131,7 +131,7 @@ Server.prototype._handleError = function(socket, error) {
 	debug('error: socket error [' + error + ']');
 
 	this.onerror.dispatch({
-		error: error
+		error: error,
 		socket: socket
 	});
 };
