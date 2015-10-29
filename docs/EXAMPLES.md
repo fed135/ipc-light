@@ -11,7 +11,7 @@
 
 ## Connecting to a server
 
-    var ipc = require('ipc');
+    var ipc = require('ipc-light');
 
     var socket = ipc.connect({}, function() {
     	socket.emit('Hello, neighbour!');

@@ -4,12 +4,12 @@
 
 **ipc-light** is a lightweight inter-process-communication library
 that leverages UNIX domain sockets to avoid latency and overhead of 
-going throw the network card, like most socket types.
+going through the network card, like most socket types.
 
 Unfortunatly, it is only available on Mac and Linux.
 
 The goal behind this implementation design is to further mimick the
-node classic setup pattern. It's designed to be simple. Very, Very simple.
+node classic setup pattern. It's designed to be simple. Very, very simple.
 
 
 ## Installation
