@@ -38,14 +38,14 @@ function Client(config) {
  * param {?} payload The payload to send to the server
  * returns {Client} Self reference, for chaining
  */
-Client.prototype.emit = function(payload) {
+Client.prototype.emit = function(payload, callback) {
 	if (!this.socket) {
 		debug('error: client is not connected');
 		return this;
 	}
 
-	debug('log: writing to socket ' + this.path)
-	this.socket.write(JSON.stringify(payload) + '\n');
+	debug('log: writing to socket ' + this.path);
+	this.socket.write(JSON.stringify(payload), callback);
 
 	return this;
 };
