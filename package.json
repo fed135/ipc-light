@@ -4,7 +4,7 @@
   "description": "A lightweight IPC server library",
   "main": "index.js",
   "scripts": {
-    "test": "mocha ./tests/index.js"
+    "test": "mocha ./tests/index.js",
     "test-travis": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- -R spec ./tests/index.js"
   },
   "repository": {
