@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha ./tests/index.js"
+    "test-travis": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- -R spec ./tests/index.js"
   },
   "repository": {
     "type": "git",
@@ -32,8 +33,10 @@
   },
   "homepage": "https://github.com/fed135/ipc-light#readme",
   "devDependencies": {
+    "coveralls": "2.10.0",
     "chai": "2.3.0",
-    "mocha": "2.2.4"
+    "mocha": "2.2.4",
+    "istanbul": "0.4.0"
   },
   "dependencies": {
     "debug": "2.2.0",
