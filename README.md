@@ -1,5 +1,9 @@
 # ipc-light
 
+[![ipc-light](https://img.shields.io/npm/v/ipc-light.svg)](https://www.npmjs.com/package/ipc-light)
+[![Build Status](https://travis-ci.org/fed135/ipc-light.svg?branch=master)](https://travis-ci.org/fed135/ipc-light)
+[![Coverage Status](https://coveralls.io/repos/fed135/ipc-light/badge.svg)](https://coveralls.io/r/fed135/ipc-light)
+
 ## What is ipc-light?
 
 **ipc-light** is a lightweight inter-process-communication library
