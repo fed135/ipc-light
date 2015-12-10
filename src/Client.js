@@ -3,7 +3,7 @@
  * @class Client
  */
 
- 'use strict'
+'use strict';
 
 /* Requires ------------------------------------------------------------------*/
 
@@ -23,7 +23,7 @@ var debug = require('debug')('ipc');
 function Client(config) {
 	config = config || {};
 	this.path = config.path || defaults.path;
-	this.socket;
+	this.socket = null;
 
 	this.onconnect = new Signal();
 	this.ondisconnect = new Signal();
@@ -44,8 +44,13 @@ Client.prototype.emit = function(payload, callback) {
 		return this;
 	}
 
+	// Can now send a Buffer or a plain string, no added steps
+	if (!(payload instanceof Buffer) && !(payload instanceof String)) {
+		payload = JSON.stringify(payload);
+	} 
+
 	debug('log: writing to socket ' + this.path);
-	this.socket.write(JSON.stringify(payload), callback);
+	this.socket.write(payload, callback);
 
 	return this;
 };
@@ -86,7 +91,7 @@ Client.prototype.connect = function(callback) {
  */
 Client.prototype._handleData = function(data) {
 	debug('log: client socket got data');
-	this.ondata.dispatch(JSON.parse(data.toString()));
+	this.ondata.dispatch(data);
 };
 
 /**

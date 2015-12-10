@@ -3,7 +3,7 @@
  * @class Server
  */
 
-'use strict'
+'use strict';
 
 /* Requires ------------------------------------------------------------------*/
 
@@ -76,11 +76,33 @@ Server.prototype.listen = function(path, callback) {
  * @returns {Server} Self reference, for chaining
  */
 Server.prototype.broadcast = function(payload) {
+	// Can now send a Buffer or a plain string, no added steps
+	if (!(payload instanceof Buffer) && !(payload instanceof String)) {
+		payload = JSON.stringify(payload);
+	} 
+
 	this.sockets.forEach(function(e) {
-		if (e.write) e.write(JSON.stringify(payload) + '\n');
-	});
+		this.write(e, payload);
+	}, this);
 
 	return this;
+};
+
+/**
+ * Makes the server broadcast a message to all connected sockets
+ * @method broadcast
+ * @memberof Server
+ * @param {Socket} socket The socket to write to
+ * @param {?} payload The payload to send to the socket
+ * @returns {Server} Self reference, for chaining
+ */
+Server.prototype.write = function(socket, payload) {
+	// Can now send a Buffer or a plain string, no added steps
+	if (!(payload instanceof Buffer) && !(payload instanceof String)) {
+		payload = JSON.stringify(payload);
+	} 
+
+	if (socket && socket.write) socket.write(payload);
 };
 
 /**
@@ -160,13 +182,13 @@ Server.prototype._handleConnections = function(socket) {
 
 	socket.on(defaults.evt, function(payload) {
 		debug('received data');
-		_self.handler(JSON.parse(payload.toString()), function(msg) {
-			socket.write(JSON.stringify(msg) + '\n');
+		_self.handler(payload, function(msg) {
+			_self.write.call(_self, socket, msg);
 		});
 	});
 
 	_self.onconnect.dispatch(socket);
-}
+};
 
 /* Exports -------------------------------------------------------------------*/
 
