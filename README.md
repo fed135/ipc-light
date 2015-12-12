@@ -7,7 +7,7 @@
 ## What is ipc-light?
 
 **ipc-light** is a lightweight inter-process-communication library
-that leverages UNIX domain sockets to avoid latency and overhead of 
+that leverages UNIX domain sockets to avoid latency, unreliability and overhead of 
 going through the network card, like most socket types.
 
 Unfortunatly, it is only available on Mac and Linux.
@@ -16,6 +16,20 @@ The goal behind this implementation design is to further mimick the
 node classic server setup pattern. It's designed to be simple. Very, very simple.
 
 COMPATIBLE WITH ALL VERSIONS OF NODE.
+
+## Release notes
+
+**v1.1.0**
+
+  [Breaking changes]
+- Payload is no longer serialized by default. This gives you the option to send
+  and receive buffers of data. A good use case would be in a situation where you
+  want to send a binary JSON object (UBJSON, msgpack, etc.). Writing any type other
+  than Buffer or String will serialized by JSON.stringify to simplify and allow resiliance.
+
+**v1.0.4**
+
+- Added write callback (to check for drain overflows)
 
 
 ## Installation
@@ -39,3 +53,8 @@ use the debug syntax. Ex:
 ## Usage
 
 See examples in the docs folder. [Here](https://github.com/fed135/ipc-light/blob/master/docs/EXAMPLES.md)
+
+
+## Benchmarks
+
+    $ node tests/benchmark.js
