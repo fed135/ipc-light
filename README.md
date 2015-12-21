@@ -11,7 +11,7 @@
 that leverages UNIX domain sockets to avoid latency, unreliability and overhead of 
 going through the network card, like most socket types.
 
-Unfortunatly, it is only available on Mac and Linux.
+Unfortunatly, it is only available on Mac and Linux yet. Windows support is on the way.
 
 The goal behind this implementation design is to further mimick the
 node classic server setup pattern. It's designed to be simple. Very, very simple.
@@ -69,3 +69,4 @@ See examples in the docs folder. [Here](https://github.com/fed135/ipc-light/blob
 
   - Test out streaming options
   - Add more tests
+  - Attempt windows support
