@@ -3,6 +3,7 @@
 [![ipc-light](https://img.shields.io/npm/v/ipc-light.svg)](https://www.npmjs.com/package/ipc-light)
 [![Build Status](https://travis-ci.org/fed135/ipc-light.svg?branch=master)](https://travis-ci.org/fed135/ipc-light)
 [![Coverage Status](https://coveralls.io/repos/fed135/ipc-light/badge.svg)](https://coveralls.io/r/fed135/ipc-light)
+[![Dependencies](https://david-dm.org/fed135/ipc-light.svg)](https://www.npmjs.com/package/ipc-light)
 
 ## What is ipc-light?
 
@@ -18,6 +19,11 @@ node classic server setup pattern. It's designed to be simple. Very, very simple
 COMPATIBLE WITH ALL VERSIONS OF NODE.
 
 ## Release notes
+
+**v1.1.1**
+
+- Bug fix: When disconnecting, socket filter was reversed.
+- Debug/Improvement: Added names to anonymous functions for debugging
 
 **v1.1.0**
 
@@ -58,3 +64,8 @@ See examples in the docs folder. [Here](https://github.com/fed135/ipc-light/blob
 ## Benchmarks
 
     $ node tests/benchmark.js
+
+## Roadmap
+
+  - Test out streaming options
+  - Add more tests

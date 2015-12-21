@@ -46,7 +46,7 @@ Server.prototype.listen = function(path, callback) {
 	if (this.server) {
 		debug('warning: server already listening on path: ' + this.path);
 
-		return this.close.call(this, function() {
+		return this.close.call(this, function reconnect() {
 			_self.listen.call(_self, path, callback);
 		});
 	}
@@ -57,7 +57,7 @@ Server.prototype.listen = function(path, callback) {
 	}
 
 	debug('log: unlinking server path...');
-	fs.unlink(this.path, function() {
+	fs.unlink(this.path, function bindSocket() {
 
 		_self.server = net.createServer(_self._handleConnections.bind(_self));
 
@@ -81,7 +81,7 @@ Server.prototype.broadcast = function(payload) {
 		payload = JSON.stringify(payload);
 	} 
 
-	this.sockets.forEach(function(e) {
+	this.sockets.forEach(function writeToAll(e) {
 		this.write(e, payload);
 	}, this);
 
@@ -116,7 +116,7 @@ Server.prototype.close = function(callback) {
 	debug('warning: closing current server');
 	this.server.close();
 	this.server = null;
-	fs.unlink(this.path, function() {
+	fs.unlink(this.path, function unlink() {
 		//Regardless of the outcome
 		if (callback) callback();
 	});
@@ -133,9 +133,9 @@ Server.prototype.close = function(callback) {
 Server.prototype._handleDisconnect = function(socket) {
 	debug('log: socket disconnected');
 	
-	//verify
+	//Remove socket from list
 	this.sockets = this.sockets.filter(function(e) {
-		return e === socket;
+		return e !== socket;
 	});
 
 	this.ondisconnect.dispatch(socket);
@@ -172,17 +172,17 @@ Server.prototype._handleConnections = function(socket) {
 
 	this.sockets.push(socket);
 
-	socket.on('close', function() {
+	socket.on('close', function _socketClose() {
 		_self._handleDisconnect.call(_self, socket);
 	});
 
-	socket.on('error', function(err) {
+	socket.on('error', function _socketError(err) {
 		_self._handleError.call(_self, socket, err);
 	});
 
-	socket.on(defaults.evt, function(payload) {
+	socket.on(defaults.evt, function _socketData(payload) {
 		debug('received data');
-		_self.handler(payload, function(msg) {
+		_self.handler(payload, function _socketHandler(msg) {
 			_self.write.call(_self, socket, msg);
 		});
 	});
