@@ -54,7 +54,4 @@ See examples in the docs folder. [Here](https://github.com/fed135/ipc-light/blob
 
 ## Roadmap
 
-  - Test out streaming options
-  - Add more tests
-  - Attempt windows support #4
-  - Add more docs #3
+[Milestones](https://github.com/fed135/ipc-light/milestones)
