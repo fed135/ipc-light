@@ -21,6 +21,7 @@ COMPATIBLE WITH ALL VERSIONS OF NODE.
 ## Releases
 
 [Latest release](https://github.com/fed135/ipc-light/releases/latest)
+
 [All releases](https://github.com/fed135/ipc-light/releases)
 
 
