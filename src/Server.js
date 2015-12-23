@@ -181,7 +181,6 @@ Server.prototype._handleConnections = function(socket) {
 	});
 
 	socket.on(defaults.evt, function _socketData(payload) {
-		debug('received data');
 		_self.handler(payload, function _socketHandler(msg) {
 			_self.write.call(_self, socket, msg);
 		});

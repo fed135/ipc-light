@@ -49,7 +49,6 @@ Client.prototype.emit = function(payload, callback) {
 		payload = JSON.stringify(payload);
 	} 
 
-	debug('log: writing to socket ' + this.path);
 	this.socket.write(payload, callback);
 
 	return this;
@@ -90,7 +89,6 @@ Client.prototype.connect = function(callback) {
  * @param {Buffer} data The received data
  */
 Client.prototype._handleData = function(data) {
-	debug('log: client socket got data');
 	this.ondata.dispatch(data);
 };
 
