@@ -20,12 +20,19 @@ COMPATIBLE WITH ALL VERSIONS OF NODE.
 
 ## Release notes
 
-**v1.1.1**
+**v1.1.2** - 2015-12-23
+
+- Exposed Client and Server API #1
+- Exposed defaults to change global settings
+- Removed write/recieve logs for slightly lower overhead
+- Pushed git tags
+
+**v1.1.1** - 2015-12-22
 
 - Bug fix: When disconnecting, socket filter was reversed.
 - Debug/Improvement: Added names to anonymous functions for debugging
 
-**v1.1.0**
+**v1.1.0** - 2015-12-10
 
   [Breaking changes]
 - Payload is no longer serialized by default. This gives you the option to send
@@ -33,7 +40,7 @@ COMPATIBLE WITH ALL VERSIONS OF NODE.
   want to send a binary JSON object (UBJSON, msgpack, etc.). Writing any type other
   than Buffer or String will serialized by JSON.stringify to simplify and allow resiliance.
 
-**v1.0.4**
+**v1.0.4** - 2015-11-11
 
 - Added write callback (to check for drain overflows)
 
@@ -69,4 +76,5 @@ See examples in the docs folder. [Here](https://github.com/fed135/ipc-light/blob
 
   - Test out streaming options
   - Add more tests
-  - Attempt windows support
+  - Attempt windows support #4
+  - Add more docs #3
