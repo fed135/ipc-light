@@ -99,11 +99,12 @@ Client.prototype._handleData = function(data) {
  * @returns {Client} Self reference, for chaining
  */
 Client.prototype.disconnect = function() {
-	debug('warning: disconnecting client');
-
-	this.socket.destroy();
-	this.socket = null;
-	this.ondisconnect.dispatch(this);
+	if (this.socket) {
+		debug('warning: disconnecting client');
+		this.socket.destroy();
+		this.socket = null;
+		this.ondisconnect.dispatch(this);
+	}
 };
 
 /**
@@ -113,14 +114,12 @@ Client.prototype.disconnect = function() {
  * @memberof Client
  */
 Client.prototype._handleDisconnect = function() {
-	debug('warning: client has been disconnected');
-
-	if (this.socket && this.socket.destroy) {
+	if (this.socket) {
+		debug('warning: client has been disconnected');
 		this.socket.destroy();
+		this.socket = null;
+		this.ondisconnect.dispatch(this);
 	}
-	
-	this.socket = null;
-	this.ondisconnect.dispatch(this);
 };
 
 /**
